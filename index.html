@@ -1,1 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D'Place — Wood-Fired Pizzeria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500;1,9..144,600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A1512;
+    --panel:#221B17;
+    --wine:#6E1F23;
+    --wine-bright:#8C2A2F;
+    --gold:#C6A15B;
+    --gold-soft:rgba(198,161,91,0.14);
+    --ivory:#EDE5D8;
+    --ivory-dim:#A99C8C;
+    --sage:#707A5C;
+    --display:'Fraunces', serif;
+    --sans:'Work Sans', sans-serif;
+  }
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--ivory);
+    font-family:var(--sans);
+    font-weight:300;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--wine); color:var(--ivory);}
 
+  .wrap{max-width:920px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- The apostrophe / flame mark — the signature element ---------- */
+  .mark{
+    display:inline-block;
+    width:0.34em;
+    height:0.62em;
+    position:relative;
+    vertical-align:0.42em;
+  }
+  .mark svg{width:100%; height:100%; display:block;}
+
+  .divider-mark{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    margin:0 auto;
+  }
+  .divider-mark .line{
+    height:1px;
+    width:56px;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity:0.6;
+  }
+  .divider-mark svg{width:14px; height:22px;}
+
+  /* ---------- Hero ---------- */
+  header{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    position:relative;
+    padding:100px 24px 60px;
+    background:
+      radial-gradient(ellipse 700px 420px at 50% 38%, rgba(198,161,91,0.10), transparent 65%),
+      radial-gradient(ellipse 900px 600px at 50% 100%, rgba(110,31,35,0.28), transparent 70%),
+      var(--ink);
+    overflow:hidden;
+  }
+  header::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 3px);
+    pointer-events:none;
+  }
+  .eyebrow{
+    font-family:var(--sans);
+    font-size:12px;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:28px;
+    opacity:0.9;
+  }
+  .logo{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(64px, 13vw, 132px);
+    line-height:0.95;
+    color:var(--ivory);
+    letter-spacing:-0.01em;
+  }
+  .logo .glow-mark{
+    position:relative;
+    color:var(--gold);
+  }
+  .tagline{
+    font-family:var(--display);
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(18px, 2.4vw, 25px);
+    color:var(--ivory-dim);
+    margin-top:26px;
+    max-width:520px;
+  }
+  .hero-cta{
+    margin-top:48px;
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .btn{
+    font-family:var(--sans);
+    font-size:13px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    text-decoration:none;
+    padding:15px 30px;
+    border-radius:2px;
+    transition:all 0.2s ease;
+  }
+  .btn-solid{
+    background:var(--gold);
+    color:var(--ink);
+    font-weight:600;
+  }
+  .btn-solid:hover{background:#D8B876;}
+  .btn-outline{
+    border:1px solid rgba(237,229,216,0.3);
+    color:var(--ivory);
+  }
+  .btn-outline:hover{border-color:var(--gold); color:var(--gold);}
+
+  .scroll-cue{
+    position:absolute;
+    bottom:36px; left:50%;
+    transform:translateX(-50%);
+    font-size:11px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--ivory-dim);
+    opacity:0.6;
+  }
+
+  /* ---------- About ---------- */
+  section{padding:100px 0;}
+  .about{text-align:center;}
+  .about .divider-mark{margin-bottom:34px;}
+  .about p{
+    font-family:var(--display);
+    font-weight:400;
+    font-size:clamp(20px, 2.6vw, 27px);
+    line-height:1.55;
+    color:var(--ivory);
+    max-width:640px;
+    margin:0 auto;
+  }
+  .about .sub{
+    font-family:var(--sans);
+    font-size:14.5px;
+    color:var(--ivory-dim);
+    max-width:460px;
+    margin:22px auto 0;
+    font-weight:300;
+  }
+
+  /* ---------- Menu ---------- */
+  .menu{border-top:1px solid rgba(198,161,91,0.18);}
+  .menu-head{text-align:center; margin-bottom:64px;}
+  .menu-head .divider-mark{margin-bottom:22px;}
+  .menu-head h2{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(32px, 5vw, 46px);
+    color:var(--ivory);
+  }
+  .menu-head .sub{
+    font-family:var(--sans);
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--ivory-dim);
+    text-transform:uppercase;
+    margin-top:10px;
+  }
+
+  .menu-category{margin-bottom:56px;}
+  .menu-category:last-child{margin-bottom:0;}
+  .cat-title{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-family:var(--sans);
+    font-size:12px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:26px;
+  }
+  .cat-title .mark{vertical-align:0.05em;}
+  .cat-title::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:rgba(198,161,91,0.25);
+  }
+
+  .menu-item{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    padding:18px 0;
+    border-bottom:1px solid rgba(237,229,216,0.08);
+  }
+  .menu-item:last-child{border-bottom:none;}
+  .item-name{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:19.5px;
+    color:var(--ivory);
+    white-space:nowrap;
+  }
+  .item-leader{
+    flex:1;
+    border-bottom:1px dotted rgba(237,229,216,0.22);
+    transform:translateY(-5px);
+    min-width:20px;
+  }
+  .item-price{
+    font-family:var(--sans);
+    font-weight:500;
+    font-size:15px;
+    color:var(--gold);
+    white-space:nowrap;
+  }
+  .item-desc{
+    font-family:var(--sans);
+    font-weight:300;
+    font-size:14px;
+    color:var(--ivory-dim);
+    margin-top:4px;
+    flex-basis:100%;
+    line-height:1.6;
+  }
+  .menu-row{display:flex; flex-direction:column;}
+  .menu-row .top{display:flex; align-items:baseline; gap:14px;}
+
+  @media (max-width:560px){
+    .item-name{font-size:17px;}
+    section{padding:72px 0;}
+  }
+
+  /* ---------- Location / footer ---------- */
+  footer{
+    border-top:1px solid rgba(198,161,91,0.18);
+    text-align:center;
+  }
+  footer .divider-mark{margin-bottom:30px;}
+  footer h3{
+    font-family:var(--display);
+    font-weight:600;
+    font-style:italic;
+    font-size:clamp(24px, 3.4vw, 32px);
+    color:var(--ivory);
+    margin-bottom:20px;
+  }
+  .details{
+    display:flex;
+    justify-content:center;
+    gap:56px;
+    flex-wrap:wrap;
+    margin-top:36px;
+    font-family:var(--sans);
+    font-size:14px;
+    color:var(--ivory-dim);
+  }
+  .details .label{
+    display:block;
+    font-size:11px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:8px;
+  }
+  .foot-note{
+    margin-top:64px;
+    font-size:11.5px;
+    color:var(--ivory-dim);
+    opacity:0.5;
+    letter-spacing:0.05em;
+  }
+</style>
+</head>
+<body>
+
+<!-- Reusable SVG mark: the apostrophe from D'Place, rendered as a small flame/leaf glyph -->
+
+<header>
+  <div class="eyebrow">Wood-Fired &middot; Est. in Fire &amp; Time</div>
+  <div class="logo">
+    D<span class="glow-mark">
+      <svg viewBox="0 0 24 44" xmlns="http://www.w3.org/2000/svg" style="width:0.26em; height:0.5em; display:inline-block; vertical-align:0.48em;">
+        <path d="M12 2C7 12 4 18 4 24C4 32 8 37 12 37C16 37 20 32 20 24C20 18 17 12 12 2Z" fill="#C6A15B"/>
+      </svg>
+    </span>Place
+  </div>
+  <p class="tagline">Fire, dough, and time — nothing here is rushed.</p>
+  <div class="hero-cta">
+    <a href="#menu" class="btn btn-solid">View the Menu</a>
+    <a href="#location" class="btn btn-outline">Reserve a Table</a>
+  </div>
+  <div class="scroll-cue">Scroll</div>
+</header>
+
+<section class="about">
+  <div class="wrap">
+    <div class="divider-mark">
+      <span class="line"></span>
+      <svg viewBox="0 0 24 44" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C7 12 4 18 4 24C4 32 8 37 12 37C16 37 20 32 20 24C20 18 17 12 12 2Z" fill="#C6A15B"/></svg>
+      <span class="line"></span>
+    </div>
+    <p>Every base is hand-stretched, blistered over live oak, and left alone to speak for itself.</p>
+    <p class="sub">D'Place is a slow room built for a fast city — a short, considered menu, a wood-fired oven at its centre, and nothing on the plate that hasn't earned its place there.</p>
+  </div>
+</section>
+
+<section class="menu" id="menu">
+  <div class="wrap">
+    <div class="menu-head">
+      <div class="divider-mark">
+        <span class="line"></span>
+        <svg viewBox="0 0 24 44" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C7 12 4 18 4 24C4 32 8 37 12 37C16 37 20 32 20 24C20 18 17 12 12 2Z" fill="#C6A15B"/></svg>
+        <span class="line"></span>
+      </div>
+      <h2>The Menu</h2>
+      <div class="sub">Ten dishes. Nothing more.</div>
+    </div>
+
+    <div class="menu-category">
+      <div class="cat-title"><span class="mark"><svg viewBox="0 0 24 44" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C7 12 4 18 4 24C4 32 8 37 12 37C16 37 20 32 20 24C20 18 17 12 12 2Z" fill="#C6A15B"/></svg></span>Wood-Fired Pizza</div>
+
+      <div class="menu-item menu-row">
+        <div class="top">
+          <span class="item-name">Margherita Antica</span>
+          <span class="item-leader"></span>
+          <span class="item-price">£14</span>
+        </div>
+        <span class="item-desc">San Marzano tomato, fior di latte, torn basil, cold-pressed olive oil.</span>
+      </div>
+
+      <div class="menu-item menu-row">
+        <div class="top">
+          <span class="item-name">Tartufo Nero</span>
+          <span class="item-leader"></span>
+          <span class="item-price">£19</span>
+        </div>
+        <span class="item-desc">Black truffle cream, wild mushroom, taleggio, wild thyme.</span>
+      </div>
+
+      <div class="menu-item menu-row">
+        <div class="top">
+          <span class="item-name">Salsiccia e Miele</span>
+          <span class="item-leader"></span>
+          <span class="item-price">£17</span>
+        </div>
+        <span class="item-desc">Calabrian sausage, wildflower honey, chilli, aged pecorino.</span>
+      </div>
+
+      <div class="menu-item menu-row">
+        <div class="top">
+          <span class="item-name">Bufala e Fico</span>
+          <span class="item-leader"></span>
+          <span class="item-price">£18</span>
+        </div>
+        <span class="item-desc">Buffalo mozzarella, fresh fig, 18-month prosciutto, wild rocket.</span>
+      </div>
+
+      <div class="menu-item menu-row">
+        <div class="top">
+          <span class="item-name">Quattro Formaggi Riserva</span>
+          <span class="item-leader"></span>
+          <span class="item-price">£17</span>
+        </div>
+        <span class="item-desc">Gorgonzola, taleggio, fontina, parmesan, candied walnut.</span>
+      </div>
+
+      <div class="menu-item menu-row">
+        <div class="top">
+          <span class="item-name">Nduja Dorata</span>
+          <span class="item-leader"></span>
+          <span class="item-price">£18</span>
+        </div>
+        <span class="item-desc">Nduja, roasted red pepper, burrata, gold chilli oil.</span>
+      </div>
+    </div>
+
+    <div class="menu-category">
+      <div class="cat-title"><span class="mark"><svg viewBox="0 0 24 44" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C7 12 4 18 4 24C4 32 8 37 12 37C16 37 20 32 20 24C20 18 17 12 12 2Z" fill="#C6A15B"/></svg></span>From the Orchard</div>
+
+      <div class="menu-item menu-row">
+        <div class="top">
+          <span class="item-name">Fichi al Forno</span>
+          <span class="item-leader"></span>
+          <span class="item-price">£8</span>
+        </div>
+        <span class="item-desc">Oven-roasted figs, mascarpone, aged balsamic, crushed pistachio.</span>
+      </div>
+
+      <div class="menu-item menu-row">
+        <div class="top">
+          <span class="item-name">Melone e Prosciutto</span>
+          <span class="item-leader"></span>
+          <span class="item-price">£9</span>
+        </div>
+        <span class="item-desc">Chilled cantaloupe, San Daniele prosciutto, wild mint.</span>
+      </div>
+    </div>
+
+    <div class="menu-category">
+      <div class="cat-title"><span class="mark"><svg viewBox="0 0 24 44" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C7 12 4 18 4 24C4 32 8 37 12 37C16 37 20 32 20 24C20 18 17 12 12 2Z" fill="#C6A15B"/></svg></span>Pressed Juices</div>
+
+      <div class="menu-item menu-row">
+        <div class="top">
+          <span class="item-name">Arancia Rossa</span>
+          <span class="item-leader"></span>
+          <span class="item-price">£5</span>
+        </div>
+        <span class="item-desc">Blood orange, pressed to order.</span>
+      </div>
+
+      <div class="menu-item menu-row">
+        <div class="top">
+          <span class="item-name">Basilico e Limone</span>
+          <span class="item-leader"></span>
+          <span class="item-price">£6</span>
+        </div>
+        <span class="item-desc">Basil, lemon, cucumber, cold-pressed.</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer id="location">
+  <div class="wrap">
+    <div class="divider-mark">
+      <span class="line"></span>
+      <svg viewBox="0 0 24 44" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C7 12 4 18 4 24C4 32 8 37 12 37C16 37 20 32 20 24C20 18 17 12 12 2Z" fill="#C6A15B"/></svg>
+      <span class="line"></span>
+    </div>
+    <h3>Come and take your time.</h3>
+
+    <div class="hero-cta">
+      <a href="#" class="btn btn-solid">Reserve a Table</a>
+      <a href="#" class="btn btn-outline">View on Map</a>
+    </div>
+
+    <div class="details">
+      <div>
+        <span class="label">Hours</span>
+        Tue&ndash;Sun, 5pm&ndash;11pm
+      </div>
+      <div>
+        <span class="label">Address</span>
+        14 Ember Lane, London
+      </div>
+      <div>
+        <span class="label">Reservations</span>
+        020 0000 0000
+      </div>
+    </div>
+
+    <div class="foot-note">D'Place &middot; Wood-fired since day one</div>
+  </div>
+</footer>
+
+</body>
+</html>
