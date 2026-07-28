@@ -217,12 +217,21 @@
 
   .menu-item{
     display:flex;
-    align-items:baseline;
-    gap:14px;
+    align-items:flex-start;
+    gap:18px;
     padding:18px 0;
     border-bottom:1px solid rgba(237,229,216,0.08);
   }
   .menu-item:last-child{border-bottom:none;}
+  .item-photo{
+    width:64px;
+    height:64px;
+    border-radius:3px;
+    object-fit:cover;
+    flex-shrink:0;
+    border:1px solid rgba(198,161,91,0.3);
+    background:var(--panel);
+  }
   .item-name{
     font-family:var(--display);
     font-weight:600;
@@ -350,57 +359,75 @@
       <div class="cat-title"><span class="mark"><svg viewBox="0 0 24 44" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C7 12 4 18 4 24C4 32 8 37 12 37C16 37 20 32 20 24C20 18 17 12 12 2Z" fill="#C6A15B"/></svg></span>Wood-Fired Pizza</div>
 
       <div class="menu-item menu-row">
+        <img class="item-photo" src="images/margherita-antica.jpg" alt="Margherita Antica">
+        <div style="flex:1;">
         <div class="top">
           <span class="item-name">Margherita Antica</span>
           <span class="item-leader"></span>
           <span class="item-price">£14</span>
         </div>
         <span class="item-desc">San Marzano tomato, fior di latte, torn basil, cold-pressed olive oil.</span>
+        </div>
       </div>
 
       <div class="menu-item menu-row">
+        <img class="item-photo" src="images/tartufo-nero.jpg" alt="Tartufo Nero">
+        <div style="flex:1;">
         <div class="top">
           <span class="item-name">Tartufo Nero</span>
           <span class="item-leader"></span>
           <span class="item-price">£19</span>
         </div>
         <span class="item-desc">Black truffle cream, wild mushroom, taleggio, wild thyme.</span>
+        </div>
       </div>
 
       <div class="menu-item menu-row">
+        <img class="item-photo" src="images/salsiccia-e-miele.jpg" alt="Salsiccia e Miele">
+        <div style="flex:1;">
         <div class="top">
           <span class="item-name">Salsiccia e Miele</span>
           <span class="item-leader"></span>
           <span class="item-price">£17</span>
         </div>
         <span class="item-desc">Calabrian sausage, wildflower honey, chilli, aged pecorino.</span>
+        </div>
       </div>
 
       <div class="menu-item menu-row">
+        <img class="item-photo" src="images/bufala-e-fico.jpg" alt="Bufala e Fico">
+        <div style="flex:1;">
         <div class="top">
           <span class="item-name">Bufala e Fico</span>
           <span class="item-leader"></span>
           <span class="item-price">£18</span>
         </div>
         <span class="item-desc">Buffalo mozzarella, fresh fig, 18-month prosciutto, wild rocket.</span>
+        </div>
       </div>
 
       <div class="menu-item menu-row">
+        <img class="item-photo" src="images/quattro-formaggi-riserva.jpg" alt="Quattro Formaggi Riserva">
+        <div style="flex:1;">
         <div class="top">
           <span class="item-name">Quattro Formaggi Riserva</span>
           <span class="item-leader"></span>
           <span class="item-price">£17</span>
         </div>
         <span class="item-desc">Gorgonzola, taleggio, fontina, parmesan, candied walnut.</span>
+        </div>
       </div>
 
       <div class="menu-item menu-row">
+        <img class="item-photo" src="images/nduja-dorata.jpg" alt="Nduja Dorata">
+        <div style="flex:1;">
         <div class="top">
           <span class="item-name">Nduja Dorata</span>
           <span class="item-leader"></span>
           <span class="item-price">£18</span>
         </div>
         <span class="item-desc">Nduja, roasted red pepper, burrata, gold chilli oil.</span>
+        </div>
       </div>
     </div>
 
@@ -408,21 +435,27 @@
       <div class="cat-title"><span class="mark"><svg viewBox="0 0 24 44" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C7 12 4 18 4 24C4 32 8 37 12 37C16 37 20 32 20 24C20 18 17 12 12 2Z" fill="#C6A15B"/></svg></span>From the Orchard</div>
 
       <div class="menu-item menu-row">
+        <img class="item-photo" src="images/fichi-al-forno.jpg" alt="Fichi al Forno">
+        <div style="flex:1;">
         <div class="top">
           <span class="item-name">Fichi al Forno</span>
           <span class="item-leader"></span>
           <span class="item-price">£8</span>
         </div>
         <span class="item-desc">Oven-roasted figs, mascarpone, aged balsamic, crushed pistachio.</span>
+        </div>
       </div>
 
       <div class="menu-item menu-row">
+        <img class="item-photo" src="images/melone-e-prosciutto.jpg" alt="Melone e Prosciutto">
+        <div style="flex:1;">
         <div class="top">
           <span class="item-name">Melone e Prosciutto</span>
           <span class="item-leader"></span>
           <span class="item-price">£9</span>
         </div>
         <span class="item-desc">Chilled cantaloupe, San Daniele prosciutto, wild mint.</span>
+        </div>
       </div>
     </div>
 
@@ -430,21 +463,27 @@
       <div class="cat-title"><span class="mark"><svg viewBox="0 0 24 44" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C7 12 4 18 4 24C4 32 8 37 12 37C16 37 20 32 20 24C20 18 17 12 12 2Z" fill="#C6A15B"/></svg></span>Pressed Juices</div>
 
       <div class="menu-item menu-row">
+        <img class="item-photo" src="images/arancia-rossa.jpg" alt="Arancia Rossa">
+        <div style="flex:1;">
         <div class="top">
           <span class="item-name">Arancia Rossa</span>
           <span class="item-leader"></span>
           <span class="item-price">£5</span>
         </div>
         <span class="item-desc">Blood orange, pressed to order.</span>
+        </div>
       </div>
 
       <div class="menu-item menu-row">
+        <img class="item-photo" src="images/basilico-e-limone.jpg" alt="Basilico e Limone">
+        <div style="flex:1;">
         <div class="top">
           <span class="item-name">Basilico e Limone</span>
           <span class="item-leader"></span>
           <span class="item-price">£6</span>
         </div>
         <span class="item-desc">Basil, lemon, cucumber, cold-pressed.</span>
+        </div>
       </div>
     </div>
 
