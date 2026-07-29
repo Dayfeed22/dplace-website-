@@ -709,9 +709,16 @@
     <input type="text" id="of-name" placeholder="Your name" required style="padding:12px; border-radius:6px; border:1px solid rgba(198,161,91,0.4); background:#1A1512; color:#EDE5D8;">
     <input type="tel" id="of-phone" placeholder="Phone number" required style="padding:12px; border-radius:6px; border:1px solid rgba(198,161,91,0.4); background:#1A1512; color:#EDE5D8;">
     <input type="text" id="of-address" placeholder="Delivery address" required style="padding:12px; border-radius:6px; border:1px solid rgba(198,161,91,0.4); background:#1A1512; color:#EDE5D8;">
-    <textarea id="of-order" placeholder="What would you like to order? (e.g. 1x Margherita Antica, 1x Arancia Rossa)" required style="padding:12px; border-radius:6px; border:1px solid rgba(198,161,91,0.4); background:#1A1512; color:#EDE5D8; min-height:80px;"></textarea>
-    <input type="text" id="of-notes" placeholder="Any notes (optional)" style="padding:12px; border-radius:6px; border:1px solid rgba(198,161,91,0.4); background:#1A1512; color:#EDE5D8;">
-    <input type="text" id="of-total" placeholder="Estimated total (e.g. £32)" style="padding:12px; border-radius:6px; border:1px solid rgba(198,161,91,0.4); background:#1A1512; color:#EDE5D8;">
+   <div style="background:#1A1512; border:1px solid rgba(198,161,91,0.4); border-radius:6px; padding:16px;">
+  <p style="color:#C6A15B; font-size:12px; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:12px;">Select items</p>
+  <div id="of-menu-list" style="display:flex; flex-direction:column; gap:10px;"></div>
+</div>
+
+<input type="text" id="of-notes" placeholder="Any notes (optional)" style="padding:12px; border-radius:6px; border:1px solid rgba(198,161,91,0.4); background:#1A1512; color:#EDE5D8;">
+
+<div style="color:#EDE5D8; text-align:right; font-weight:600; font-size:15px;">
+  Total: £<span id="of-total-display">0</span>
+</div>
 
     <button type="submit" style="background:#C6A15B; color:#1A1512; font-weight:600; padding:14px; border:none; border-radius:6px; cursor:pointer; font-size:14px; text-transform:uppercase; letter-spacing:0.08em;">Submit Order</button>
   </form>
@@ -727,18 +734,72 @@
   var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyz-65aSVHz7sYYmpKlkBCQCmBGMhde17L-x6gKcuOxgwK8Rpn7Dzj_pLraSxPpORc/exec"; // <-- from Piece 2, step 8
   var WHATSAPP_NUMBER = "96871355984"; // <-- your real WhatsApp number
 
+  var MENU_ITEMS = [
+  {name:"Margherita Antica", price:14},
+  {name:"Tartufo Nero", price:19},
+  {name:"Salsiccia e Miele", price:17},
+  {name:"Bufala e Fico", price:18},
+  {name:"Quattro Formaggi Riserva", price:17},
+  {name:"Nduja Dorata", price:18},
+  {name:"Fichi al Forno", price:8},
+  {name:"Melone e Prosciutto", price:9},
+  {name:"Arancia Rossa", price:5},
+  {name:"Basilico e Limone", price:6}
+];
+
+var menuListEl = document.getElementById('of-menu-list');
+MENU_ITEMS.forEach(function(item, i){
+  var row = document.createElement('div');
+  row.style.cssText = "display:flex; align-items:center; justify-content:space-between; gap:10px;";
+  row.innerHTML =
+    '<label style="color:#EDE5D8; font-size:14px; flex:1;">' +
+      '<input type="checkbox" class="of-item-check" data-name="' + item.name + '" data-price="' + item.price + '" style="margin-right:8px;">' +
+      item.name + ' — £' + item.price +
+    '</label>' +
+    '<input type="number" class="of-item-qty" min="1" value="1" style="width:50px; padding:6px; border-radius:4px; border:1px solid rgba(198,161,91,0.4); background:#221B17; color:#EDE5D8;">';
+  menuListEl.appendChild(row);
+});
+
+function updateTotal(){
+  var total = 0;
+  document.querySelectorAll('.of-item-check').forEach(function(chk, i){
+    if(chk.checked){
+      var qty = parseInt(chk.closest('div').querySelector('.of-item-qty').value) || 1;
+      total += parseFloat(chk.getAttribute('data-price')) * qty;
+    }
+  });
+  document.getElementById('of-total-display').textContent = total;
+}
+menuListEl.addEventListener('change', updateTotal);
+  
   var form = document.getElementById('dplace-order-form');
   form.addEventListener('submit', function(e){
     e.preventDefault();
 
-    var data = {
-      name: document.getElementById('of-name').value,
-      phone: document.getElementById('of-phone').value,
-      address: document.getElementById('of-address').value,
-      order: document.getElementById('of-order').value,
-      notes: document.getElementById('of-notes').value,
-      total: document.getElementById('of-total').value
-    };
+   var orderLines = [];
+var total = 0;
+document.querySelectorAll('.of-item-check').forEach(function(chk){
+  if(chk.checked){
+    var qty = parseInt(chk.closest('div').querySelector('.of-item-qty').value) || 1;
+    var price = parseFloat(chk.getAttribute('data-price'));
+    orderLines.push(qty + "x " + chk.getAttribute('data-name') + " (£" + (price*qty) + ")");
+    total += price * qty;
+  }
+});
+
+if(orderLines.length === 0){
+  alert("Please select at least one item.");
+  return;
+}
+
+var data = {
+  name: document.getElementById('of-name').value,
+  phone: document.getElementById('of-phone').value,
+  address: document.getElementById('of-address').value,
+  order: orderLines.join(", "),
+  notes: document.getElementById('of-notes').value,
+  total: "£" + total
+};
 
     fetch(SCRIPT_URL, {
       method: 'POST',
