@@ -702,6 +702,60 @@
   </div>
 </div>
 
+<section id="order-form" style="padding:80px 24px; max-width:600px; margin:0 auto;">
+  <h2 style="font-family:'Fraunces',serif; color:#EDE5D8; text-align:center; margin-bottom:30px;">Place Your Order</h2>
+
+  <form id="dplace-order-form" style="display:flex; flex-direction:column; gap:14px;">
+    <input type="text" id="of-name" placeholder="Your name" required style="padding:12px; border-radius:6px; border:1px solid rgba(198,161,91,0.4); background:#1A1512; color:#EDE5D8;">
+    <input type="tel" id="of-phone" placeholder="Phone number" required style="padding:12px; border-radius:6px; border:1px solid rgba(198,161,91,0.4); background:#1A1512; color:#EDE5D8;">
+    <input type="text" id="of-address" placeholder="Delivery address" required style="padding:12px; border-radius:6px; border:1px solid rgba(198,161,91,0.4); background:#1A1512; color:#EDE5D8;">
+    <textarea id="of-order" placeholder="What would you like to order? (e.g. 1x Margherita Antica, 1x Arancia Rossa)" required style="padding:12px; border-radius:6px; border:1px solid rgba(198,161,91,0.4); background:#1A1512; color:#EDE5D8; min-height:80px;"></textarea>
+    <input type="text" id="of-notes" placeholder="Any notes (optional)" style="padding:12px; border-radius:6px; border:1px solid rgba(198,161,91,0.4); background:#1A1512; color:#EDE5D8;">
+    <input type="text" id="of-total" placeholder="Estimated total (e.g. £32)" style="padding:12px; border-radius:6px; border:1px solid rgba(198,161,91,0.4); background:#1A1512; color:#EDE5D8;">
+
+    <button type="submit" style="background:#C6A15B; color:#1A1512; font-weight:600; padding:14px; border:none; border-radius:6px; cursor:pointer; font-size:14px; text-transform:uppercase; letter-spacing:0.08em;">Submit Order</button>
+  </form>
+
+  <div id="of-success" style="display:none; text-align:center; margin-top:24px; color:#EDE5D8;">
+    <p>Order received! We'll start preparing it.</p>
+    <a id="of-whatsapp-link" href="#" target="_blank" style="display:inline-block; margin-top:14px; background:#25D366; color:#fff; padding:12px 22px; border-radius:6px; text-decoration:none; font-weight:600;">Confirm on WhatsApp too</a>
+  </div>
+</section>
+
+<script>
+(function(){
+  var SCRIPT_URL = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE"; // <-- from Piece 2, step 8
+  var WHATSAPP_NUMBER = "2348000000000"; // <-- your real WhatsApp number
+
+  var form = document.getElementById('dplace-order-form');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    var data = {
+      name: document.getElementById('of-name').value,
+      phone: document.getElementById('of-phone').value,
+      address: document.getElementById('of-address').value,
+      order: document.getElementById('of-order').value,
+      notes: document.getElementById('of-notes').value,
+      total: document.getElementById('of-total').value
+    };
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify(data)
+    }).then(function(){
+      form.style.display = 'none';
+      document.getElementById('of-success').style.display = 'block';
+
+      var waText = "Hi, I just placed an order:\n" + data.order + "\nAddress: " + data.address + "\nTotal: " + data.total;
+      document.getElementById('of-whatsapp-link').href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(waText);
+    }).catch(function(){
+      alert("Something went wrong sending your order, please try WhatsApp directly instead.");
+    });
+  });
+})();
+</script>  
+  
 <script>
 (function(){
   var bubble = document.getElementById('dplace-chat-bubble');
